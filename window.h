@@ -11,16 +11,14 @@ class Window : public QWidget {
 	public:
 		explicit Window(QWidget *parent = 0);
 		void start(const std::string & channel_name);
-
 	private:
 		epics::pvaClient::PvaClientPtr            pva;
 		epics::pvaClient::PvaClientChannelPtr     channel;
 		epics::pvaClient::PvaClientMonitorPtr     monitor;
-		epics::pvaClient::PvaClientMonitorDataPtr data;
 	
 		std::string channel_name;
 
-		QLineEdit   *_text;
+		QLineEdit   *text;
 };
 
 #endif /* WINDOW_H */

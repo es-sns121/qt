@@ -10,7 +10,7 @@ using namespace epics::pvData;
 class thread_arg {
 	public:
 		PvaClientMonitorPtr monitor;
-		QLineEdit * _text;
+		QLineEdit * text;
 };
 
 Window::Window(QWidget *parent) : 
@@ -18,9 +18,9 @@ Window::Window(QWidget *parent) :
 
 	setFixedSize(100, 100);
 
-	_text = new QLineEdit(this);
-	_text->setReadOnly(true);
-	_text->setGeometry(10, 10, 80, 50);
+	text = new QLineEdit(this);
+	text->setReadOnly(true);
+	text->setGeometry(10, 10, 80, 50);
 }
 
 void* poll(void *arg) {
@@ -33,7 +33,7 @@ void* poll(void *arg) {
 
 		string value = a->monitor->getData()->getPVStructure()->getSubField<PVUByte>("value")->getAs<string>();
 		
-		a->_text->setText(value.c_str());
+		a->text->setText(value.c_str());
 
 		a->monitor->releaseEvent();
 	}
@@ -47,7 +47,7 @@ void Window::start(const string & channel_name) {
 
 	thread_arg *arg = new thread_arg();
 	arg->monitor = monitor;
-	arg->_text = _text;
+	arg->text = text;
 
 	pthread_t poll_thread;
 	pthread_create(&poll_thread, NULL, poll, (void *) arg);
