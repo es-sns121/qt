@@ -30,8 +30,12 @@ void* poll(void *arg) {
 		a->monitor->waitEvent();
 		
 		a->monitor->getData();
-
-		string value = a->monitor->getData()->getPVStructure()->getSubField<PVUByte>("value")->getAs<string>();
+		
+		stringstream out;
+		
+		a->monitor->getData()->getPVStructure()->dumpValue(out);
+		cout << out.str() << endl;	
+		string value = out.str();
 		
 		a->text->setText(value.c_str());
 
